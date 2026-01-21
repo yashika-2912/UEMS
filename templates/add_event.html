@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UEMS - Add Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .event-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        input[type=text], input[type=date], input[type=number] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #43cea2;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #185a9d;
+        }
+        .flash {
+            text-align: center;
+            color: red;
+        }
+        a {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            color: #333;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="event-box">
+        <h2>Add New Event</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <input type="text" name="name" placeholder="Event Name" required>
+            <input type="date" name="date" placeholder="Event Date" required>
+            <input type="text" name="venue" placeholder="Venue" required>
+            <input type="number" name="capacity" placeholder="Capacity" required min="1">
+            <button type="submit">Add Event</button>
+        </form>
+        <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

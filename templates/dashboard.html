@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UEMS - Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        header a {
+            color: #fff;
+            float: right;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f0f0f0;
+        }
+        .register-btn {
+            padding: 5px 10px;
+            background: #ff512f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .register-btn[disabled] {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        h2 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Welcome, {{ session.username }}!
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% if role == 'admin' %}
+            <a href="{{ url_for('add_event') }}">Add Event</a>
+        {% endif %}
+    </header>
+    <div class="container">
+        <h2>Available Events</h2>
+        <table>
+            <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Capacity</th>
+                {% if role == 'student' %}
+                    <th>Action</th>
+                {% elif role == 'admin' %}
+                    <th>Registered Students</th>
+                {% endif %}
+            </tr>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ event.venue }}</td>
+                <td>{{ event.capacity }}</td>
+                {% if role == 'student' %}
+                    <td>
+                        {% if event.id in registered_events %}
+                            <button class="register-btn" disabled>Registered</button>
+                        {% else %}
+                            <a href="{{ url_for('register_event', event_id=event.id) }}"><button class="register-btn">Register</button></a>
+                        {% endif %}
+                    </td>
+                {% elif role == 'admin' %}
+                    <td>
+                        {% if event.id in event_registrations %}
+                            <ul>
+                                {% for student in event_registrations[event.id] %}
+                                    <li>{{ student }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            None
+                        {% endif %}
+                    </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

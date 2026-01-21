@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UEMS - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 150px 20px;
+        }
+        h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn-login {
+            background-color: #6a11cb;
+            color: white;
+        }
+        .btn-login:hover {
+            background-color: #2575fc;
+        }
+        .btn-register {
+            background-color: #fc5c7d;
+            color: white;
+        }
+        .btn-register:hover {
+            background-color: #6a82fb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to University Event Management System</h1>
+        <a href="{{ url_for('login') }}" class="btn-login"><i class="fa fa-sign-in-alt"></i> Login</a>
+        <a href="{{ url_for('register') }}" class="btn-register"><i class="fa fa-user-plus"></i> Register</a>
+    </div>
+</body>
+</html>
